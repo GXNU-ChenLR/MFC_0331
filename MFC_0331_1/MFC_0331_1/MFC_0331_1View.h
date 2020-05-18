@@ -17,7 +17,7 @@ public:
 
 // 操作
 public:
-	POINT p;
+	CString s;
 // 重写
 public:
 	virtual void OnDraw(CDC* pDC);  // 重写以绘制该视图
@@ -39,7 +39,6 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnChar(UINT nChar, UINT nRepCnt, UINT nFlags);
-	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 };
 
 #ifndef _DEBUG  // MFC_0331_1View.cpp 中的调试版本

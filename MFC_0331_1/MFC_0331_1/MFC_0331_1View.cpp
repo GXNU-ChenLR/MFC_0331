@@ -23,7 +23,8 @@ IMPLEMENT_DYNCREATE(CMFC_0331_1View, CView)
 
 BEGIN_MESSAGE_MAP(CMFC_0331_1View, CView)
 	ON_WM_CHAR()
-	ON_WM_LBUTTONDOWN()
+//	ON_WM_LBUTTONDOWN()
+//ON_WM_LBUTTONDOWN()
 END_MESSAGE_MAP()
 
 // CMFC_0331_1View 构造/析构
@@ -31,7 +32,7 @@ END_MESSAGE_MAP()
 CMFC_0331_1View::CMFC_0331_1View()
 {
 	// TODO: 在此处添加构造代码
-
+	s.Empty();
 }
 
 CMFC_0331_1View::~CMFC_0331_1View()
@@ -100,26 +101,12 @@ void CMFC_0331_1View::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 	ASSERT_VALID(pDoc);
 	if (!pDoc)
 		return;
+	pDoc->cr.left = pDoc->x - 99;
+	pDoc->cr.top = pDoc->y - 9;
 	CClientDC dc(this);
-	CString s,c;
-	c.Format(_T("%c"), nChar);
-	
-	if ( p.x >= pDoc->cr.left && p.y >= pDoc->cr.top)
-		s.Insert(p.x / 10 + p.y / 20 * 30, nChar);
-	else
-		s.Append(c);
-
-		pDoc->cr.left = pDoc->x - 99;
-		pDoc->cr.top = pDoc->y - 9;
-		dc.DrawText(s, pDoc->cr, DT_LEFT | DT_WORDBREAK | DT_EDITCONTROL);
+	char c;
+	c = (char)nChar;
+	s = s+c;
+	dc.TextOutW(pDoc->cr.left, pDoc->cr.top, s);
 	CView::OnChar(nChar, nRepCnt, nFlags);
-}
-
-
-void CMFC_0331_1View::OnLButtonDown(UINT nFlags, CPoint point)
-{
-	// TODO: 在此添加消息处理程序代码和/或调用默认值
-	p.x = point.x;
-	p.y = point.y;
-	CView::OnLButtonDown(nFlags, point);
 }
