@@ -107,7 +107,6 @@ void CMFC_0331_2View::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 	if (!s.IsEmpty())
 	{
 		min = ss.cx / s.GetLength();  //字符串的宽/字符串的长度=平均每个字符所占的像素宽度
-									  //int line = ss.cx / s.GetLength();//表示一共要输出多少行
 		num = cr.Width() / min;//每一行输出的字符个数
 		row = (insert.y - cr.top)/ss.cy;//平均每个字符所占的像素高度
 		column = (insert.x - cr.left)/min;//列的位置
@@ -117,7 +116,6 @@ void CMFC_0331_2View::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 		{
 			s.Insert(row*num + column, c);
 		}
-		
 	}
 	else
 		s.AppendChar(c);
