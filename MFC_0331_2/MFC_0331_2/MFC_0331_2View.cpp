@@ -103,19 +103,18 @@ void CMFC_0331_2View::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 	char c;
 	c = (char)nChar;
 	CClientDC dc(this);
-	CSize ss = dc.GetTextExtent(s); 
+	CSize ss = dc.GetTextExtent(s); //获取所选字体中指定字符串的宽度和高度
 	if (!s.IsEmpty())
 	{
 		min = ss.cx / s.GetLength();  //字符串的宽/字符串的长度=平均每个字符所占的像素宽度
 									  //int line = ss.cx / s.GetLength();//表示一共要输出多少行
-		int num = 200 / min;//每一行输出的字符个数
-		row = (insert.y - cr.top)/ss.cy;
-		column = (insert.y - cr.top)/min;
+		num = cr.Width() / min;//每一行输出的字符个数
+		row = (insert.y - cr.top)/ss.cy;//平均每个字符所占的像素高度
+		column = (insert.x - cr.left)/min;//列的位置
 		//插入字符的位置=(insert.x - cr.left) / 每个字符所占像素+(insert.y - cr.top) / 行数*每行字符数
 
 		if ( insert.x >= cr.left && insert.y >= cr.top && insert.x <= cr.right && insert.y <= cr.bottom)
 		{
-			//int m = (insert.x - cr.left) / min + (insert.y - cr.top) / line * 24;//在鼠标点击位置插入字符
 			s.Insert(row*num + column, c);
 		}
 		
@@ -124,7 +123,6 @@ void CMFC_0331_2View::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 		s.AppendChar(c);
 	
 	dc.DrawText(s,cr, DT_LEFT | DT_WORDBREAK | DT_EDITCONTROL);
-
 	CView::OnChar(nChar, nRepCnt, nFlags);
 }
 
